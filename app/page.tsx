@@ -131,7 +131,7 @@ const playSound = (type: 'generate' | 'edit' | 'success' | 'error') => {
       }
       audio.volume = 0.3;
       audio.play().catch(() => {}); // Ignore errors if sound can't play
-    } catch (e) {
+    } catch {
       // Ignore audio errors
     }
   }
@@ -236,7 +236,7 @@ export default function Home() {
       };
       setDialogueHistory(prev => [newEntry, ...prev.slice(0, 4)]); // Keep last 5
       
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error generating dialogue:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       
@@ -406,7 +406,7 @@ export default function Home() {
         
         if (data.useBuiltIn) {
           // Fallback to browser TTS with better voice selection
-          useBrowserTTS(text, character, lineId);
+          playBrowserTTS(text, character);
         } else {
           // Use high-quality ElevenLabs audio
           const audio = new Audio(data.audioData);
@@ -419,21 +419,21 @@ export default function Home() {
           
           audio.onerror = () => {
             console.log('Audio playback failed, falling back to browser TTS');
-            useBrowserTTS(text, character, lineId);
+            playBrowserTTS(text, character);
           };
           
           await audio.play();
         }
       } else {
-        useBrowserTTS(text, character, lineId);
+        playBrowserTTS(text, character);
       }
-    } catch (error) {
-      console.error('TTS error:', error);
-      useBrowserTTS(text, character, lineId);
+    } catch {
+      console.error('TTS error');
+      playBrowserTTS(text, character);
     }
   };
 
-  const useBrowserTTS = (text: string, character: string, lineId: string) => {
+  const playBrowserTTS = (text: string, character: string) => {
     if ('speechSynthesis' in window) {
       speechSynthesis.cancel();
       
@@ -535,7 +535,7 @@ export default function Home() {
     playNext();
   };
 
-  const playLineBrowserTTS = (line: any, onEnd: () => void) => {
+  const playLineBrowserTTS = (line: DialogueLine, onEnd: () => void) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(line.text);
       const voice = getVoiceForLanguage(language);
@@ -581,7 +581,7 @@ export default function Home() {
       } else {
         alert('❌ Problemă cu OpenAI API!\n\nEroare: ' + data.message + '\nSoluție: ' + data.solution + '\n\n---\n\n❌ OpenAI API Issue!\n\nError: ' + data.message + '\nSolution: ' + data.solution);
       }
-    } catch (error) {
+    } catch {
       alert('❌ Nu se poate testa conexiunea OpenAI!\n\nVerifică conexiunea la internet.\n\n---\n\n❌ Cannot test OpenAI connection!\n\nCheck your internet connection.');
     }
   };
@@ -986,12 +986,12 @@ export default function Home() {
                   <h4 className="font-bold mb-2">🛠️ Diagnostice / Diagnostics</h4>
                   <div className="space-y-2 text-gray-300">
                     <p><strong>Problemă cu generarea dialogului?</strong></p>
-                    <p>1. 🔧 Apasă "Test API" pentru a verifica conexiunea OpenAI</p>
+                    <p>1. 🔧 Apasă &quot;Test API&quot; pentru a verifica conexiunea OpenAI</p>
                     <p>2. 🔑 Verifică că ai adăugat OPENAI_API_KEY în .env.local</p>
                     <p>3. 💳 Verifică că ai credite în contul OpenAI</p>
                     <hr className="border-white/20 my-2" />
                     <p><strong>Dialogue generation issues?</strong></p>
-                    <p>1. 🔧 Click "Test API" to check OpenAI connection</p>
+                    <p>1. 🔧 Click &quot;Test API&quot; to check OpenAI connection</p>
                     <p>2. 🔑 Make sure you added OPENAI_API_KEY to .env.local</p>
                     <p>3. 💳 Check that you have credits in your OpenAI account</p>
                   </div>

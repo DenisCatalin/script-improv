@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 export async function GET() {
@@ -48,17 +48,20 @@ export async function GET() {
       usage: completion.usage
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('OpenAI API test error:', error);
+    
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorType = error instanceof Error && 'type' in error ? (error as any).type : 'unknown';
     
     return NextResponse.json({
       status: 'error',
       message: 'OpenAI API test failed',
-      error: error.message || 'Unknown error',
-      type: error.type || 'unknown',
-      solution: error.message?.includes('API key') 
+      error: errorMessage,
+      type: errorType,
+      solution: errorMessage.includes('API key') 
         ? 'Check your OpenAI API key in .env.local'
-        : error.message?.includes('quota')
+        : errorMessage.includes('quota')
         ? 'Check your OpenAI account billing and usage limits'
         : 'Check your internet connection and OpenAI service status'
     });
