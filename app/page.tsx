@@ -16,7 +16,11 @@ const POPULAR_CHARACTERS = [
   'Captain America', 'Black Widow', 'Thor', 'Hulk', 'Deadpool', 'Wolverine',
   'Princess Leia', 'Luke Skywalker', 'Gandalf', 'Frodo', 'Aragorn', 'Legolas',
   'Jack Sparrow', 'Indiana Jones', 'James Bond', 'John Wick', 'The Joker', 
-  'Elsa', 'Buzz Lightyear', 'Mickey Mouse', 'Goku', 'Naruto', 'Pikachu'
+  'Elsa', 'Buzz Lightyear', 'Mickey Mouse', 'Goku', 'Naruto', 'Pikachu',
+  'Spongebob', 'Patrick Star', 'Squidward', 'Homer Simpson', 'Bart Simpson',
+  'Rick Sanchez', 'Morty Smith', 'Scooby Doo', 'Shaggy', 'Bugs Bunny',
+  'Daffy Duck', 'Gordon Ramsay', 'Bob Ross', 'Mr. Bean', 'Borat',
+  'Austin Powers', 'Ace Ventura', 'The Rock', 'Chuck Norris', 'Keanu Reeves'
 ];
 
 const LOCATIONS = [
@@ -24,7 +28,14 @@ const LOCATIONS = [
   'in an elevator', 'at a gas station', 'in a library', 'at a restaurant',
   'in a parking garage', 'at the beach', 'in a taxi', 'at a grocery store',
   'in a waiting room', 'at a bus stop', 'in a hotel lobby', 'at a park',
-  'in a haunted house', 'at a wedding', 'in a spaceship', 'at a zoo'
+  'in a haunted house', 'at a wedding', 'in a spaceship', 'at a zoo',
+  'at a comedy club', 'in a bathroom', 'at a funeral', 'in a dentist office',
+  'at a karaoke bar', 'in a prison cell', 'at a yoga class', 'in a hot air balloon',
+  'at a strip club', 'in a time machine', 'at a zombie apocalypse', 'in a therapist office',
+  'at a cooking class', 'in a horror movie set', 'at a speed dating event', 'in an escape room',
+  'at a Renaissance fair', 'in a submarine', 'at a nudist beach', 'in a retirement home',
+  'at a drug rehab center', 'in a vampire lair', 'at a magic show', 'in a morgue',
+  'at a reality TV show', 'in a clown college', 'at a fortune teller', 'in a mad scientist lab'
 ];
 
 const THEMES = [
@@ -36,7 +47,19 @@ const THEMES = [
   'They\'re trying to split a bill', 'They both want to use the same gym equipment',
   'They\'re stuck in traffic', 'They\'re waiting for the same bus', 'They\'re in line at a theme park',
   'They\'re competing in a cooking show', 'They\'re roommates arguing about chores',
-  'They meet at a speed dating event'
+  'They meet at a speed dating event', 'They accidentally switched phones',
+  'They\'re fighting over the TV remote', 'They both claim to have invented something stupid',
+  'They\'re trying to assemble IKEA furniture', 'They\'re competing to be the worst employee',
+  'They\'re arguing about who farted', 'They both think they\'re invisible',
+  'They\'re trying to catch the same bug', 'They\'re competing for the worst haircut',
+  'They\'re both terrible at flirting', 'They\'re arguing about conspiracy theories',
+  'They\'re trying to avoid paying for something', 'They both think they\'re time travelers',
+  'They\'re competing to be more dramatic', 'They\'re both hypochondriacs',
+  'They\'re arguing about whose mom is cooler', 'They\'re trying to out-lie each other',
+  'They\'re both terrible at giving directions', 'They\'re competing for worst dance moves',
+  'They\'re arguing about who\'s more clumsy', 'They both think they\'re celebrities',
+  'They\'re trying to impress the same goldfish', 'They\'re competing to tell worse jokes',
+  'They\'re both afraid of the same ridiculous thing', 'They\'re arguing about parallel universes'
 ];
 
 const LANGUAGES = [
@@ -63,7 +86,21 @@ const CHARACTER_MOODS = [
   { id: 'dramatic', name: 'Dramatic', emoji: '🎭' },
   { id: 'confused', name: 'Confused', emoji: '😵' },
   { id: 'flirty', name: 'Flirty', emoji: '😘' },
-  { id: 'sleepy', name: 'Sleepy', emoji: '😴' }
+  { id: 'sleepy', name: 'Sleepy', emoji: '😴' },
+  { id: 'paranoid', name: 'Paranoid', emoji: '😰' },
+  { id: 'drunk', name: 'Drunk', emoji: '🥴' },
+  { id: 'overly-positive', name: 'Overly Positive', emoji: '🤩' },
+  { id: 'conspiracy-theorist', name: 'Conspiracy Theorist', emoji: '🕵️‍♀️' },
+  { id: 'valley-girl', name: 'Valley Girl', emoji: '💅' },
+  { id: 'robot', name: 'Robot', emoji: '🤖' },
+  { id: 'pirate', name: 'Pirate', emoji: '🏴‍☠️' },
+  { id: 'gangster', name: 'Gangster', emoji: '🕴️' },
+  { id: 'hippie', name: 'Hippie', emoji: '☮️' },
+  { id: 'karen', name: 'Karen', emoji: '💁‍♀️' },
+  { id: 'surfer-dude', name: 'Surfer Dude', emoji: '🏄‍♂️' },
+  { id: 'old-person', name: 'Old Person', emoji: '👴' },
+  { id: 'toddler', name: 'Toddler', emoji: '👶' },
+  { id: 'alien', name: 'Alien', emoji: '👽' }
 ];
 
 // Character emoji mapping for visual representation
@@ -100,7 +137,27 @@ const CHARACTER_EMOJIS: { [key: string]: string } = {
   'Mickey Mouse': '🐭',
   'Goku': '🐒',
   'Naruto': '🍜',
-  'Pikachu': '⚡'
+  'Pikachu': '⚡',
+  'Spongebob': '🧽',
+  'Patrick Star': '⭐',
+  'Squidward': '🦑',
+  'Homer Simpson': '🍩',
+  'Bart Simpson': '😈',
+  'Rick Sanchez': '🧪',
+  'Morty Smith': '😰',
+  'Scooby Doo': '🐕',
+  'Shaggy': '🥪',
+  'Bugs Bunny': '🐰',
+  'Daffy Duck': '🦆',
+  'Gordon Ramsay': '👨‍🍳',
+  'Bob Ross': '🎨',
+  'Mr. Bean': '🤐',
+  'Borat': '🤵',
+  'Austin Powers': '🕺',
+  'Ace Ventura': '🦜',
+  'The Rock': '💪',
+  'Chuck Norris': '🥋',
+  'Keanu Reeves': '🕴️'
 };
 
 const getCharacterEmoji = (character: string): string => {
